@@ -1,0 +1,41 @@
+from turtle import Turtle, Screen
+import random
+
+is_race_on = False
+screen = Screen()
+screen.setup(width=500, height=400)
+user_guess = screen.textinput(title="Make your bet", prompt="Guess the color of the Turtle that will win the race.")
+colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+y_positions = [-125, -75, -25, 25, 75, 125]
+all_turtles = []
+
+# for loop to create 6 turtles with colors from 'colors' list.
+for turtle_index in range(0, 6):
+    new_turtle = Turtle(shape="turtle")
+    new_turtle.color(colors[turtle_index])
+    new_turtle.penup()
+    new_turtle.goto(x=-230, y=y_positions[turtle_index])
+    all_turtles.append(new_turtle)
+
+# check if the user has made a guess
+if user_guess:
+    is_race_on = True
+
+# for loop that runs while "is_race_on" is true.
+while is_race_on:
+
+    # for loop that makes all turtles move a certain amount individually.
+    for turtle in all_turtles:
+        if turtle.xcor() > 230:
+            is_race_on = False
+            winning_color = turtle.pencolor()
+            if winning_color == user_guess:
+                print(f"You have won! The {winning_color} turtle is the winner!")
+            else:
+                print(f"You have lost! The {winning_color} turtle is the winner!")
+
+        rand_distance = random.randint(0, 10)
+        turtle.forward(rand_distance)
+
+
+screen.exitonclick()
